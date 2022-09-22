@@ -10,6 +10,8 @@ function AddPersonForm() {
   }
 
   function handleSubmit(e) {
+    props.handleSubmit(person);
+    setPerson('');
     e.preventDefault();
   }
 
@@ -37,9 +39,12 @@ function PeopleList(props) {
 function ContactManager(props) {
   const [contacts, setContacts] = useState(props.data);
 
+  function addPerson(name) {
+    setContacts([...contacts], name);
+  }
   return(
     <div>
-      <AddPersonForm/>
+      <AddPersonForm handleSubmit={addPerson}/>
       <PeopleList data={contacts}/>
     </div>
   );
