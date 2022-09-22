@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './style.css';
 
-function AddPersonForm() {
+function AddPersonForm(props) {
   const [person, setPerson] = useState('');
 
   function handleChange(e) {
@@ -10,8 +10,10 @@ function AddPersonForm() {
   }
 
   function handleSubmit(e) {
-    props.handleSubmit(person);
-    setPerson('');
+    if (person !== '') {
+      props.handleSubmit(person);
+      setPerson('');
+    }
     e.preventDefault();
   }
 
@@ -21,7 +23,7 @@ function AddPersonForm() {
         type="text"
         placeholder="add new contact"
         onChange={handleChange}
-        value={person.name}
+        value={person}
       />
       <button type="submit">Add</button>
     </form>
@@ -30,9 +32,7 @@ function AddPersonForm() {
 
 function PeopleList(props) {
   const arr = props.data;
-  const listItems = arr.map((val, index) =>
-    <li key={index}>{val}</li>
-  );
+  const listItems = arr.map((val, index) => <li key={index}>{val}</li>);
   return <ul>{listItems}</ul>;
 }
 
@@ -40,17 +40,19 @@ function ContactManager(props) {
   const [contacts, setContacts] = useState(props.data);
 
   function addPerson(name) {
-    setContacts([...contacts], name);
+    setContacts([...contacts, name]);
   }
-  return(
+  return (
     <div>
-      <AddPersonForm handleSubmit={addPerson}/>
-      <PeopleList data={contacts}/>
+      <AddPersonForm handleSubmit={addPerson} />
+      <PeopleList data={contacts} />
     </div>
   );
 }
 
-const contacts = ["Didin Rudini", "Ayu Sri Lestari", "Aulia Puspitasari"];
+const contacts = ['Didin Rudini', 'Ayu Sri Lestari', 'Aulia Puspitasari'];
 
-
-ReactDOM.render(<ContactManager data={contacts}/>, document.getElementById("root"));
+ReactDOM.render(
+  <ContactManager data={contacts} />,
+  document.getElementById('root')
+);
