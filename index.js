@@ -34,12 +34,18 @@ function PeopleList(props) {
   return <ul>{listItems}</ul>;
 }
 
-const contacts = ["Didin Rudini", "Ayu Sri Lestari", "Aulia Puspitasari"];
-const el = (
-  <div>
-    <AddPersonForm/>
-    <PeopleList data={contacts}/>
-  </div>
-);
+function ContactManager(props) {
+  const [contacts, setContacts] = useState(props.data);
 
-ReactDOM.render(el, document.getElementById("root"));
+  return(
+    <div>
+      <AddPersonForm/>
+      <PeopleList data={contacts}/>
+    </div>
+  );
+}
+
+const contacts = ["Didin Rudini", "Ayu Sri Lestari", "Aulia Puspitasari"];
+
+
+ReactDOM.render(<ContactManager data={contacts}/>, document.getElementById("root"));
